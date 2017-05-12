@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+<title>欢迎动画</title>
+<style>
+html,canvas,body{
+	width: 100%; height: 100%;
+	overflow: hidden;
+	font: 1em/1.5em 'Helvetica';
+    color: #FFFFFF;
+    -webkit-user-select:disabled;
+	padding: 0;
+	margin: 0;
+}
+body{
+	display: flex;
+	min-width: 900px;
+	min-height: 625px;
+    background: #000;
+    -webkit-perspective:1000px;
+	overflow: hidden;
+	justify-content: center;
+		align-items: center;
+}
+.out #title{
+	opacity: 0;
+	background: rgba(0,0,0,0.5);
+	font-size: 30px;
+	-webkit-transform: translateZ(-50px) rotateX(5deg);
+	text-shadow:     0 1px 0 hsl(174,5%,80%),
+	                 0 2px 0 hsl(174,5%,75%),
+	                 0 3px 0 hsl(174,5%,70%),
+	                 0 4px 0 hsl(174,5%,66%),
+	                 0 5px 0 hsl(174,5%,64%),
+	                 0 6px 0 hsl(174,5%,62%),
+	                 0 7px 0 hsl(174,5%,61%),
+	                 0 8px 0 hsl(174,5%,60%),
+	
+	                 0 0 5px rgba(0,0,0,.05),
+	                0 1px 3px rgba(0,0,0,.2),
+	                0 3px 5px rgba(0,0,0,.2),
+	               0 5px 10px rgba(0,0,0,.2),
+	              0 10px 10px rgba(0,0,0,.2),
+	              0 20px 20px rgba(0,0,0,.3);
+}
+.in #title{
+	font-size: 30px;
+	background: rgba(0,0,0,0.9);
+	text-shadow:     0 1px 0 hsl(174,5%,80%),
+	                 0 2px 0 hsl(174,5%,75%),
+	                 0 3px 0 hsl(174,5%,70%),
+	                 0 4px 0 hsl(174,5%,66%),
+	                 0 5px 0 hsl(174,5%,64%),
+	                 0 6px 0 hsl(174,5%,62%),
+	                 0 7px 0 hsl(174,5%,61%),
+	                 0 8px 0 hsl(174,5%,60%),
+	
+	                 0 0 5px rgba(0,0,0,.05),
+	                0 1px 3px rgba(0,0,0,.2),
+	                0 3px 5px rgba(0,0,0,.2),
+	               0 5px 10px rgba(0,0,0,.2),
+	              0 10px 10px rgba(0,0,0,.2),
+	              0 20px 20px rgba(0,0,0,.3);
+}
+.out #additional{
+	opacity: 0;
+}
+.out #stage{
+	opacity: 0;
+	-webkit-transform: translateZ(0px);
+}
+.in div{
+	opacity: 1;
+	-webkit-transform: translateZ(0px) rotateY(0) rotateX(0);
+}
+
+#ringgroup{
+	position: absolute;
+	width: 800px;
+	height: 800px;
+	left: 50%;
+	top: 50%;
+	margin-left: -400px;
+	margin-top: -400px;
+	-webkit-transition: All 2.2s 0.1s;
+	-webkit-transform: rotateZ(-360deg) translateZ(-4000px) scale(0.02);
+	-webkit-perspective:1000px;
+	-webkit-transform-style:preserve-3d;
+}
+#ringgroup.pass{
+	-webkit-transform:rotateZ(0) translateZ(3200px) scale(1);
+	opacity: 1;
+}
+.ring{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: url('img/ring.png');
+	-webkit-transform-style:preserve-3d;
+}
+.ring:nth-of-type(1){-webkit-transform: translateZ(0px);opacity: 1;}
+.ring:nth-of-type(2){-webkit-transform: rotateZ(60deg) translateZ(-1000px) scale(0.9);opacity: 0.7;}
+.ring:nth-of-type(3){-webkit-transform: rotateZ(120deg) translateZ(-200px) scale(0.8);opacity: 0.5;}
+.ring:nth-of-type(4){-webkit-transform: rotateZ(30deg) translateZ(-3000px) scale(0.7);opacity: 0.1;}
+#core{
+	display: block;
+	position: absolute;
+	width: 400px;
+	height: 316px;
+	left: 50%;
+	top: 50%;
+	margin-left: -200px;
+	margin-top: -158px;
+	-webkit-transition: All 0.9s ease;
+	-webkit-transform:  translateZ(-4000px) rotateY(90deg) rotateZ(30deg);
+	opacity: 1;
+}
+#core.pass{
+	-webkit-transform: rotateZ(0) translateZ(1000px) rotateY(-15deg);
+	opacity: 1;
+}
+#core img{
+	width: 100%;
+}
+#stage{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	-webkit-transition:All 2.3s 0s ease-in;
+	-webkit-filter:brightness(1.3);
+}
+#hero{
+	width: 100%;
+	text-align: center;
+	margin-top: -6%;
+	position: relative;
+}
+#hero>img{
+	width: 82%;
+	max-width: 1133px;
+	margin-top: 100px;
+}
+#hero div.king{
+	position: absolute;
+	top:35%;
+	right:27%;
+	animation: king 0.5s 2.2s ease-in forwards;
+	z-index: 10;
+	opacity: 0;
+}
+@-webkit-keyframes king{
+	from{
+		opacity: 0;
+		transform: scale(10);
+	}
+	to{
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+#title{
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 14%;
+	text-align: center;
+	-webkit-transition:All 1.6s 0.8s ease-out;
+}
+#additional{
+	position: absolute;
+	width: 100%;
+	left: 0;
+	bottom: 16%;
+	text-align: center;
+	-webkit-transition:All 1s 1s ease-in;
+	letter-spacing: 0.6em;
+}
+#additional span{
+	color: #F61F4E;
+}
+#copyright{
+	position: fixed;
+	left: 15px;
+	bottom:15px;
+	color: rgba(255,255,255,0.2);
+	font-size: 12px;
+	font-family: Arial;
+}
+#light{
+	width: 700px;
+	height: 500px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -350px;
+	margin-top: -250px;
+	background: url('img/light.png');
+	-webkit-transform:scaleX(0.1) scaleY(0.1);
+	-webkit-filter:brightness(0);
+	-webkit-transition:All 0.4s ease-in;
+}
+#light.pass{
+	-webkit-transform:scaleX(2) scaleY(0.5);
+	-webkit-filter:brightness(6);
+}
+#light.passed{
+	-webkit-transform:scaleX(6) scaleY(1.1);
+	-webkit-filter:brightness(0);
+	-webkit-transition:All 0.3s ease-out;
+}
+#wave{
+	width: 320px;
+	height: 320px;
+	top: 50%;
+	left: 50%;
+	margin-left: -160px;
+	margin-top: -160px;
+	position: absolute;
+	background: url('img/wave.png');
+	-webkit-transform: scale(0.01);
+	-webkit-transition: All 0.9s 0.62s ease;
+	-webkit-filter:brightness(3);
+}
+#wave.pass{
+	-webkit-transform: scale(12);
+	-webkit-filter:brightness(1);
+	opacity: 0;
+}
+</style>
+</head>
+<body class="out">
+	<div id="light"></div>
+	<div id="wave"></div>
+	<div id="stage">
+  	<div id="hero">
+  		<img src="img/hero.png">
+  		<div class="king">
+  			<img src="img/king.png" alt="" />
+  		</div>
+  	</div>
+	</div>
+	<div id="title">
+		<h1>超级<span>VIP</span>，<span>VIP中</span>的战斗机</h1>
+	</div>
+	<div id="additional">
+		更多<span>特权</span>，更优质的<span>服务</span>，享受至高无上的<span>尊贵</span>！
+	</div>
+
+	<div id="ringgroup">
+		<div class="ring"></div>
+		<div class="ring"></div>
+		<div class="ring"></div>
+		<div class="ring"></div>
+	</div>
+	<div id="core">
+		<img src="img/47.png"></div>
+	</div>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script>
+$(document).ready(function(){
+	startdelay = 200;
+	coredelay = 300;
+	maindelay = 630;
+	setTimeout("$('#ringgroup').addClass('pass');$('#light').addClass('pass');$('#core').addClass('pass');",startdelay);
+	setTimeout("$('#light').addClass('passed');$('#wave').addClass('pass');",startdelay + coredelay);
+	setTimeout("$('body').removeClass('out').addClass('in')", startdelay + coredelay + maindelay);
+
+});
+</script>
+</body>
+</html>
